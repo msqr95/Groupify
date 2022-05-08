@@ -1,5 +1,6 @@
 package com.marcomichaelis.groupify
 
+import androidx.compose.material.Text
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -24,7 +25,7 @@ class ExampleInstrumentedTest {
     @Test()
     fun myTest() {
         composeTestRule.setContent {
-            Greeting(name = "Mikaelis")
+            Text(text = "Mikaelis")
         }
 
         composeTestRule.onNodeWithTag("text").assertTextEquals("Hello Mikaelis!")
