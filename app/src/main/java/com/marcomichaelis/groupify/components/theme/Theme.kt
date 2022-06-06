@@ -4,12 +4,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.runtime.Composable
 
-private val ColorPalette = darkColors(
-    primary = DefaultDark,
-    primaryVariant = Lighter,
-    secondary = LightGray,
-    background = Background
-)
+private val ColorPalette =
+    darkColors(
+        primary = DefaultDark,
+        primaryVariant = Lighter,
+        secondary = LightGray,
+        background = Background
+    )
 
 @Composable
 fun GroupifyTheme(content: @Composable () -> Unit) {

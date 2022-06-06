@@ -9,38 +9,36 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.marcomichaelis.groupify.R
 
-val Inter = FontFamily(
-    Font(R.font.inter_thin, FontWeight.Thin, FontStyle.Normal),
-    Font(R.font.inter_thin_italic, FontWeight.Thin, FontStyle.Italic),
-    Font(R.font.inter_extra_light, FontWeight.ExtraLight, FontStyle.Normal),
-    Font(R.font.inter_extra_light_italic, FontWeight.ExtraLight, FontStyle.Italic),
-    Font(R.font.inter_light, FontWeight.Light, FontStyle.Normal),
-    Font(R.font.inter_light_italic, FontWeight.Light, FontStyle.Italic),
-    Font(R.font.inter_regular, FontWeight.Normal, FontStyle.Normal),
-    Font(R.font.inter_italic, FontWeight.Normal, FontStyle.Italic),
-    Font(R.font.inter_medium, FontWeight.Medium, FontStyle.Normal),
-    Font(R.font.inter_medium_italic, FontWeight.Medium, FontStyle.Italic),
-    Font(R.font.inter_semi_bold, FontWeight.SemiBold, FontStyle.Normal),
-    Font(R.font.inter_semi_bold_italic, FontWeight.SemiBold, FontStyle.Italic),
-    Font(R.font.inter_bold, FontWeight.Bold, FontStyle.Normal),
-    Font(R.font.inter_bold_italic, FontWeight.Bold, FontStyle.Italic),
-    Font(R.font.inter_extra_bold, FontWeight.ExtraBold, FontStyle.Normal),
-    Font(R.font.inter_extra_bold_italic, FontWeight.ExtraBold, FontStyle.Italic),
-    Font(R.font.inter_black, FontWeight.Black, FontStyle.Normal),
-    Font(R.font.inter_black_italic, FontWeight.Black, FontStyle.Italic),
-)
-
+val Inter =
+    FontFamily(
+        Font(R.font.inter_thin, FontWeight.Thin, FontStyle.Normal),
+        Font(R.font.inter_thin_italic, FontWeight.Thin, FontStyle.Italic),
+        Font(R.font.inter_extra_light, FontWeight.ExtraLight, FontStyle.Normal),
+        Font(R.font.inter_extra_light_italic, FontWeight.ExtraLight, FontStyle.Italic),
+        Font(R.font.inter_light, FontWeight.Light, FontStyle.Normal),
+        Font(R.font.inter_light_italic, FontWeight.Light, FontStyle.Italic),
+        Font(R.font.inter_regular, FontWeight.Normal, FontStyle.Normal),
+        Font(R.font.inter_italic, FontWeight.Normal, FontStyle.Italic),
+        Font(R.font.inter_medium, FontWeight.Medium, FontStyle.Normal),
+        Font(R.font.inter_medium_italic, FontWeight.Medium, FontStyle.Italic),
+        Font(R.font.inter_semi_bold, FontWeight.SemiBold, FontStyle.Normal),
+        Font(R.font.inter_semi_bold_italic, FontWeight.SemiBold, FontStyle.Italic),
+        Font(R.font.inter_bold, FontWeight.Bold, FontStyle.Normal),
+        Font(R.font.inter_bold_italic, FontWeight.Bold, FontStyle.Italic),
+        Font(R.font.inter_extra_bold, FontWeight.ExtraBold, FontStyle.Normal),
+        Font(R.font.inter_extra_bold_italic, FontWeight.ExtraBold, FontStyle.Italic),
+        Font(R.font.inter_black, FontWeight.Black, FontStyle.Normal),
+        Font(R.font.inter_black_italic, FontWeight.Black, FontStyle.Italic),
+    )
 
 // Set of Material typography styles to start with
-val Typography = Typography(
-    defaultFontFamily = Inter,
-    body1 = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    ),
-
-    button = TextStyle(
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 18.sp,
-    ),
-)
+val Typography =
+    Typography(
+        defaultFontFamily = Inter,
+        body1 = TextStyle(fontWeight = FontWeight.Normal, fontSize = 16.sp),
+        button =
+            TextStyle(
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 18.sp,
+            ),
+    )
