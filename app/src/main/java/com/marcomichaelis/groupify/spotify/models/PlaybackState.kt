@@ -1,9 +1,16 @@
 package com.marcomichaelis.groupify.spotify.models
 
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.Serializer
+import com.marcomichaelis.groupify.spotify.json
+import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.jsonNull
 
 @Serializable(with = RepeatStateSerializer::class)
 enum class RepeatState {
@@ -14,26 +21,34 @@ enum class RepeatState {
 
 @OptIn(ExperimentalSerializationApi::class)
 @Serializer(forClass = RepeatState::class)
-class RepeatStateSerializer :
-    SpotifyEnumSerializer<RepeatState>(RepeatState.Off, RepeatState::valueOf)
+class RepeatStateSerializer : KSerializer<RepeatState> {
 
-@Serializable(with = ShuffleStateSerializer::class)
-enum class ShuffleState {
-    Off,
-    On
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("RepeatState", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: RepeatState) {
+        encoder.encodeString(value.name.lowercase())
+    }
+
+    override fun deserialize(decoder: Decoder): RepeatState {
+        return try {
+            val key = decoder.decodeString()
+            enumValueOf("${key[0].uppercase()}${key.substring(1)}")
+        } catch (e: IllegalArgumentException) {
+            RepeatState.Off
+        }
+    }
 }
-
-@OptIn(ExperimentalSerializationApi::class)
-@Serializer(forClass = ShuffleState::class)
-class ShuffleStateSerializer :
-    SpotifyEnumSerializer<ShuffleState>(ShuffleState.Off, ShuffleState::valueOf)
 
 @Serializable
 data class PlaybackState(
-    @SerialName("item") val track: Track,
+    @SerialName("item") val _track: JsonElement,
     val device: Device,
     @SerialName("is_playing") val isPlaying: Boolean,
-    val progress: Int?,
-    @SerialName("repeat_state") val repeatState: String, // TODO Add Enum
-    @SerialName("shuffle_state") val shuffleState: String, // TODO Add Enum
-)
+    @SerialName("progress_ms") val progress: Int?,
+    @SerialName("repeat_state") val repeatState: RepeatState,
+    @SerialName("shuffle_state") val shuffleState: Boolean,
+) {
+    val track by lazy { Track.fromJson(_track) }
+}
+

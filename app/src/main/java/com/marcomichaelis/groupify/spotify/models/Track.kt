@@ -1,28 +1,28 @@
 package com.marcomichaelis.groupify.spotify.models
 
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.KSerializer
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Serializer
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.*
 
-private const val DefaultCoverImage =
+const val DefaultCoverImage =
     "https://i.scdn.co/image/ab67616d0000b2739510c262f77afc125df888b8"
 
-@Serializable(with = TrackSerializer::class)
+@Serializable
+@Entity(tableName = "tracks")
 data class Track(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
     val uri: String,
     val albumUri: String,
     val coverImage: String,
     val artists: List<String>,
     val duration: Long,
-    val explicit: Boolean
+    val explicit: Boolean,
 ) {
+    @Ignore var alreadyInPlaylist: Boolean = true
+
     companion object {
         fun listFromJson(element: JsonElement): List<Track> {
             val items = element.jsonObject["tracks"]?.jsonObject?.get("items") ?: return emptyList()
@@ -30,6 +30,18 @@ data class Track(
         }
 
         fun fromJson(it: JsonElement): Track {
+            if (it is JsonNull) {
+                return Track(
+                    title = "",
+                    uri = "",
+                    albumUri = "",
+                    duration = 0,
+                    explicit = false,
+                    artists = emptyList(),
+                    coverImage = DefaultCoverImage,
+                )
+            }
+
             val artists =
                 it.jsonObject["artists"]?.jsonArray?.map { artist ->
                     artist.jsonObject["name"]?.jsonPrimitive?.content ?: ""
@@ -59,20 +71,5 @@ data class Track(
                 coverImage = coverImage
             )
         }
-    }
-}
-
-@OptIn(ExperimentalSerializationApi::class)
-@Serializer(forClass = Track::class)
-object TrackSerializer : KSerializer<Track> {
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Track")
-
-    override fun serialize(encoder: Encoder, value: Track) {
-        throw NotImplementedError("Encoding tracks is not supported")
-    }
-
-    override fun deserialize(decoder: Decoder): Track {
-        val element = decoder.decodeSerializableValue(JsonElement.serializer())
-        return Track.fromJson(element)
     }
 }
