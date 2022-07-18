@@ -31,6 +31,7 @@ class PeerSpotifyClientTest {
         coVerify { wifiDirectConnector.sendRemoteCall(RemoteCall("pause")) }
         assertThat(response).isFalse()
     }
+
     @Test
     fun `should do setVolume call`(): Unit = runBlocking {
         coEvery { wifiDirectConnector.sendRemoteCall(any()) } returns "true"

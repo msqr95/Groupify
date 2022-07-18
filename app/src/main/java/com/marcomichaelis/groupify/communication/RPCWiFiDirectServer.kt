@@ -47,14 +47,10 @@ constructor(
     init {
         scope.launch {
             spotifyClient.streamPlaybackState {
-                scope.launch {
-                    messageFlow.emit(WebsocketMessage("playbackState", json.encodeToString(it)))
-                }
+                messageFlow.emit(WebsocketMessage("playbackState", json.encodeToString(it)))
             }
             spotifyClient.streamPlaylist {
-                scope.launch {
                     messageFlow.emit(WebsocketMessage("playlist", json.encodeToString(it)))
-                }
             }
         }
     }
